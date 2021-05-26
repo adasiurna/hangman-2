@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <rel>
+    <title>Kartuvės</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./main.css">
+</head>
+
+<body>
+  <div class="main">
+    <div id="reload">
+      <i class="fa fa-refresh"></i>
+    </div>
+    <div class="container">
+      <div id="left">
+        <h1 id="main-heading">Atspėk žodį!</h1>
+        <div id="letters">
+        </div>
+        <form id="guess">
+          <input id="input-letter" type="text" autofocus>
+          <input type="submit" value="Spėju">
+        </form>
+        <div id="tried_letters_block">
+          <P>Spėtos raidės:</P>
+          <div id="tried_letters"></div>
+        </div>
+      </div>
+      <div id="right">
+        <img src="./guy0.png" alt="guy1">
+      </div>
+    </div>
+
+    <div id="imageContainerMainS">
+      <div id="imageContainerS">
+        <img src="https://media.giphy.com/media/xT0xezQGU5xCDJuCPe/giphy.gif"></img>
+      </div>
+    </div>
+
+    <div id="imageContainerMainF">
+      <div id="imageContainerF">
+        <img src="https://i.gifer.com/L6h.gif"></img>
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+  <script src="./string.js"></script>
+  <script src="./func.js"></script>
+  <script src="./main.js"></script>
+</body>
+
+</html>

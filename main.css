@@ -1,0 +1,109 @@
+body {
+  font-family: Verdana;
+  color: #222;
+  /* background-image: url(https://i.ibb.co/3CRRnKc/blue-brickwall-small.jpg); */
+  background-image: url('./mint.jpg');
+}
+
+h1 {
+  letter-spacing: 8px;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.main {
+  background-color: rgba(232, 255, 255, 0.7);
+  width: 80%;
+  margin-left: 10%;
+  padding-top: 20px;
+  margin-top: 10px;
+  min-height: 500px;
+  position: relative;
+  border-radius: 6px;
+}
+
+input[type="text"], div.letter {
+  font-size: 18px;
+  display: inline-block;
+  margin-right: 7px;
+  border: 2px solid #71ccd5;
+  padding: 10px 12px 3px 11px;
+  border-radius: 6px;
+  font-weight: 400;
+  min-width: 15px;
+  max-width: 15px;
+  outline: none;
+  margin-bottom: 5px;
+}
+
+.guessed-letter {
+  background: #71ccd5;
+  transition: 0.5;
+}
+
+form {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+input[type="submit"]:hover {
+  background-color: #49C8D1;
+}
+
+input[type="submit"] {
+  border: none;
+  background-color: #71ccd5;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  outline: none;
+  font-weight: bold;
+  transition: 0.15s ease-in;
+  margin-bottom: 5px;
+}
+
+h1, p, #letters, #tried_letters, form {
+  text-align: center;
+}
+
+h1 {
+  margin-top: 40px;
+}
+
+#reload i {
+  color: #71ccd5;
+  cursor: pointer;
+  width: 40px;
+  font-size: 40px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+#imageContainerMainS, #imageContainerMainF {
+  justify-content: center;
+  padding-bottom: 30px;
+  display: none;
+}
+
+#imageContainerS, #imageContainerF {
+  width: 498px;
+  background-color: burlywood;
+}
+
+#imageContainerS {
+  height: 225px;
+}
+
+#imageContainerF {
+  height: 250px;
+}
+
+#right img {
+  margin-top: 40px;
+}

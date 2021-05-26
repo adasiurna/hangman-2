@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Hangman Game</title>
+    <style>
+        body {
+            font-family: Verdana;
+            color: #222;
+						background-image: url(https://images.pexels.com/photos/1308624/pexels-photo-1308624.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940);
+        }
+				.main {
+					background-color: rgba(232, 255, 255, 0.9);
+					width: 80%;
+    			margin-left: 10%;
+    			padding-top: 20px;
+    			margin-top: 40px;
+    			min-height: 500px;
+					position: relative;
+					border-radius: 6px;
+				}
+        input[type="text"],
+				div.letter {
+					  font-size: 18px;
+            display: inline-block;
+            margin-right: 7px;
+            border: 2px solid #71ccd5;
+            padding: 10px 12px 3px 11px;
+            border-radius: 6px;
+            font-weight: 400;
+						min-width: 15px;
+            max-width: 15px;
+						outline: none;
+        }
+				form {
+					margin-top: 40px;
+					display: flex;
+					justify-content: center;
+				}	
+				input[type="submit"]:hover {
+					background-color: #49C8D1;
+				}
+				input[type="submit"] {
+					border: none;
+    			background-color: #71ccd5;
+    			padding: 10px 15px;
+    			border-radius: 6px;
+					cursor: pointer;
+					outline: none;
+					font-weight: bold;
+					transition: 0.15s ease-in;
+				}
+        h1,
+        p,
+        #letters,
+				#tried_letters,
+				form {
+            text-align: center;
+        }
+        h1 {
+            margin-top: 40px;
+        }
+				#reload i {
+          color: #71ccd5;
+					cursor: pointer;
+					width: 40px;
+					font-size: 40px;
+					position: absolute;
+					top: 20px;
+					right: 20px;
+				}
+				#imageContainerMain {
+    			justify-content: center;
+					margin-top: 20px;
+					padding-bottom: 30px;
+					display: none;
+				}
+				#imageContainer {
+					width: 498px; 
+					height: 225px; 
+					background-color: burlywood;
+				}
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+	<div class="main">
+		<div id="reload">
+      <i class="fa fa-refresh"></i>
+		</div>
+    <h1 id="main-heading">Hangman!</h1>
+    <p>Atspėk šitą žodį:</p>
+    <div id="letters">
+		</div>
+		<form id="guess">
+				<input id="input-letter" type="text" autofocus>
+				<input type="submit" value="Spėju">
+		</form>
+		<div id="tried_letters_block">
+			<P>Spėtos raidės:</P>
+			<div id="tried_letters"></div>
+	  </div>	
+		<div id="imageContainerMain">
+				<div id="imageContainer">
+					<img src="https://media.giphy.com/media/xT0xezQGU5xCDJuCPe/giphy.gif"></img>
+				</div>
+		</div>
+	</div>
+
+    <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+    <script>
+			//variables, words array, answer letters array
+			var words = ["javascript","čepsėti","beždžionė","kėdė"];
+
+			var setNewGame = function(words) {
+				//set variables
+				var word = words[Math.floor(Math.random() * words.length)];
+				var answerArray = [];
+				var guessedLettersArray = [];
+				var remainingLetters = word.length;
+
+				//prepare DOM
+				$("#letters").html('');
+				$('#tried_letters').html('');
+				for (var i = 0; i < word.length; i++) {
+					$("#letters").append('<div class="letter">_</div>');
+					answerArray[i] = "_";
+				}
+
+        //return game object
+				return {
+					word: word,
+					answerArray: answerArray,
+					guessedLettersArray: guessedLettersArray,
+					remainingLetters: remainingLetters
+				}
+			}
+      
+      var Game = setNewGame(words);
+
+      //on reload hit
+      $('#reload').on('click', function() {
+				//$('#imageContainerMain').css('display', 'none');
+        $('#imageContainer').fadeOut(1500);
+				$('#tried_letters_block').show();
+        $('form').html('<input id="input-letter" type="text" autofocus><input type="submit" value="Spėju">').delay(1500);
+        $('form #input-letter').focus();
+        Game = setNewGame(words);
+      }) //reload click handler ends
+
+      $('#guess').on('submit', function(e){
+					e.preventDefault();
+          var playerGuess = $('#guess #input-letter').val().toLowerCase();
+
+          //let's check if letter was already guessed
+          if (Game.guessedLettersArray.length > 1) {
+            for (var i=0; i<Game.guessedLettersArray.length; i++) {
+              if (Game.guessedLettersArray[i] === playerGuess) {
+                alert('Šią raidę jau spėjai!');
+                $('#guess #input-letter').val('');
+                return;
+              }
+            }
+          }
+
+          //if a guess is right (must be only one _letter_ update game status)
+          if ( (playerGuess) && (playerGuess.length < 2) && (isNaN(playerGuess))) {
+
+            //update guessed letters
+            Game.guessedLettersArray.push(playerGuess);
+            $("#tried_letters").append('<span>'+playerGuess+', </span>');
+            $('#guess #input-letter').val('');
+            
+            //update answer array
+						for (var j = 0; j < Game.word.length; j++) {
+							if (Game.word[j] === playerGuess) {
+								Game.answerArray[j] = playerGuess;
+								$('#letters div.letter').eq(j).html(playerGuess);
+								Game.remainingLetters--;
+							}
+						}
+
+            //if player has guessed
+            if (Game.remainingLetters === 0) {
+              $('form').html('<h1>A T S P Ė J A I  !!!</h1>');
+							$('#imageContainerMain').css('display', 'flex');
+					    $('#imageContainer').delay(500).slideDown(500);
+					    $('#tried_letters_block').hide();
+            }
+
+            //after game round, put cursor to input
+            $('form #input-letter').focus();
+
+          } else {
+            alert('Įveskite vieną raidę');
+            $('#guess #input-letter').val('');
+            $('form #input-letter').focus();
+          }
+
+      }) // guess click handler ends
+
+    </script>
+</body>
+
+</html>

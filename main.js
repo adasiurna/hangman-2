@@ -35,7 +35,7 @@ $('#reload').on('click', function () {
   $('#imageContainerS').fadeOut(1500);
   $('#imageContainerF').fadeOut(1500);
   $('#tried_letters_block').show();
-  $('form').html('<input id="input-letter" type="text" autofocus><input type="submit" value="Spėju">').delay(1500);
+  $('#input-letter').attr('disabled', false);
   $('form #input-letter').focus();
   Game = setNewGame(words);
 }) //reload click handler ends
@@ -74,7 +74,6 @@ $('#guess').on('submit', function (e) {
       }
     }
     if (!correctGuess && Game.wrongLetters < 8) {
-      console.log(Game.wrongLetters);
       Game.wrongLetters++;
       if (Game.wrongLetters < 8) {
         $("#right").html('<img src="./guy' + Game.wrongLetters + '.png" alt="hangman guy">');
@@ -92,25 +91,13 @@ $('#guess').on('submit', function (e) {
 
     //if player has guessed
     if (Game.remainingLetters === 0 && Game.wrongLetters === 0) {
-      $('#imageContainerMainS').before('<h1 id="message">WOW!!! ATSPĖJAI BE KLAIDŲ!!!</h1>');
-      $('#input-letter').attr('disabled', true);
-      $('#imageContainerMainS').css('display', 'flex');
-      $('#imageContainerS').delay(500).slideDown(500);
-      $('#tried_letters_block').hide();
+      success('<h1 id="message">WOW!!! ATSPĖJAI BE KLAIDŲ!!!</h1>');
     }
     else if (Game.remainingLetters === 0 && Game.wrongLetters <= 5) {
-      $('#imageContainerMainS').before('<h1 id="message">ATSPĖJAI!!!</h1>');
-      $('#input-letter').attr('disabled', true);
-      $('#imageContainerMainS').css('display', 'flex');
-      $('#imageContainerS').delay(500).slideDown(500);
-      $('#tried_letters_block').hide();
+      success('<h1 id="message">ATSPĖJAI!!!</h1>');
     }
     else if (Game.remainingLetters === 0 && Game.wrongLetters > 5) {
-      $('#imageContainerMainS').before('<h1 id="message">PAGALIAU ATSPĖJAI!!!</h1>');
-      $('#input-letter').attr('disabled', true);
-      $('#imageContainerMainS').css('display', 'flex');
-      $('#imageContainerS').delay(500).slideDown(500);
-      $('#tried_letters_block').hide();
+      success('<h1 id="message">PAGALIAU ATSPĖJAI!!!</h1>');
     }
 
     //after game round, put cursor to input
@@ -123,4 +110,17 @@ $('#guess').on('submit', function (e) {
   }
 
 }) // guess click handler ends
+
+$('input#giveup').on('click', function () {
+  if (Game.wrongLetters <= 6) {
+    alert('Nepasiduok kol gyva(s)!!!');
+    $('form #input-letter').focus();
+    return;
+  }
+  if (Game.wrongLetters > 6) {
+    for (var i = 0; i < Game.word.length; i++) {
+      $('#letters div.letter').eq(i).addClass('guessed-letter').html(Game.word[i]);
+    }
+  }
+})
 

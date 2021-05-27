@@ -1,3 +1,11 @@
+function success(message) {
+  $('#imageContainerMainS').before(message);
+  $('#input-letter').attr('disabled', true);
+  $('#imageContainerMainS').css('display', 'flex');
+  $('#imageContainerS').delay(500).slideDown(500);
+  $('#tried_letters_block').hide();
+}
+
 var words = [
   "006500750072006f00760069007a0069006a0061",
   "010d006500700073011700740069",

@@ -29,7 +29,6 @@ h1 {
 input[type="text"], div.letter {
   font-size: 18px;
   display: inline-block;
-  margin-right: 7px;
   border: 2px solid #71ccd5;
   padding: 10px 12px 3px 11px;
   border-radius: 6px;
@@ -51,11 +50,15 @@ form {
   justify-content: center;
 }
 
-input[type="submit"]:hover {
+input[type="submit"]:hover, input[type="button"]:hover {
   background-color: #49C8D1;
 }
 
-input[type="submit"] {
+input[type="submit"], input[type="button"], input[type="text"], div.letter {
+  margin-left: 7px;
+}
+
+input[type="submit"], input[type="button"] {
   border: none;
   background-color: #71ccd5;
   padding: 10px 15px;
